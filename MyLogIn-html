@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Nma's Login Form</title>
+    <style>
+        .main-wrapper {
+            height: 50vh;
+            display: flex;
+            align-items: right;
+        }
+        
+        label {
+            float: left;
+        }
+
+        form {
+            display: block;
+            padding: 30px;
+            border: solid #f8f9fa;
+            text-align: left;
+            width: 60%;
+            margin: auto;
+        }
+        
+        .text-input {
+            display: block;
+            padding: 10px 30px;
+            width: 60%;
+            margin-bottom: 20px;
+            border: 1px solid #adb0b4;
+        }
+        
+        .btn {
+            text-align: center;
+            border: none;
+            padding: 10px 20px;
+            color: #fff;
+            background-color: #1164bd;
+            text-transform: uppercase;
+            cursor: pointer;
+        }
+        
+        .error-div {
+            padding: 15px;
+            margin-bottom: 20px;
+            border-radius: 5px;
+            color: #fff;
+            background-color: #e93e4d;
+            display: none;
+        }
+        
+        .success-div {
+            display: block;
+            padding: 90px 30px;
+            border: solid #f8f9fa;
+            text-align: center;
+            width: 50%;
+            margin: auto;
+            display: none;
+        }
+        
+        .success-div h1 {
+            color: blue;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="main-wrapper">
+        <form onsubmit="return login(event)" action="#" id="loginForm">
+            <h1>Login Form</h1>
+            <div class="error-div" id="errorDiv"></div>
+       <label>Username:</label>
+            <input type="text" id="username" class="text-input" required>
+       <label>Password:</label>
+            <input type="password" id="password" class="text-input" required>
+            <input type="submit" class="btn" value="Login">
+        </form>
+        <div class="success-div" id="successDiv">
+            <h1>You have successfully logged in!</h1>
+        </div>
+
+    </div>
+    <script>
+        function login(e) {
+            e.preventDefault();
+            var username = document.getElementById("username").value;
+            var password = document.getElementById("password").value;
+            var errorDiv = document.getElementById("errorDiv");
+            var successDiv = document.getElementById("successDiv");
+
+            // check if password has up to 8 letters
+            if (password.length < 8) {
+                errorDiv.innerText = 'Password must be at least 8 characters long.';
+                errorDiv.style.display = "block";
+                return false;
+            }
+
+            // check if password has a lower case
+            var lowerRegex = /^(?=.*[a-z]).+$/; // Lowercase Regex
+            if (!lowerRegex.test(password)) {
+                errorDiv.innerText = 'Password must contain a lowercase letter.';
+                errorDiv.style.display = "block";
+                return false;
+            }
+
+            // check if password has an Uppercase Character
+            var upperRegex = /^(?=.*[A-Z]).+$/; // Uppercase Regex 
+            if (!upperRegex.test(password)) {
+                errorDiv.innerText = 'Password must contain an uppercase letter.';
+                errorDiv.style.display = "block";
+                return false;
+            }
+
+            // check if password contains a number or special  Character
+            var specialRegex = /^(?=.*[0-9_\W]).+$/; // Special  character Regex 
+            if (!specialRegex.test(password)) {
+                errorDiv.innerText = 'Password must contain a number or special character';
+                errorDiv.style.display = "block";
+                return false;
+            }
+
+            //Show success div and hide form if there is no error
+            document.getElementById("successDiv").style.display = "block";
+            document.getElementById("loginForm").style.display = "none";
+        }
+    </script>
+</body>
+
+</html>
